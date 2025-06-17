@@ -1,0 +1,36 @@
+<issues>
+  <issue>
+    <name>Stored XSS in comment section</name>
+    <severity>High</severity>
+    <path>/forum/post.php?id=22</path>
+    <issueBackground>
+      This input is reflected without encoding, allowing stored script execution. 
+      The payload `<script>alert('xss')</script>` was permanently stored in comments.
+    </issueBackground>
+  </issue>
+  <issue>
+    <name>SQL Injection in login</name>
+    <severity>High</severity>
+    <path>/login.php</path>
+    <issueBackground>
+      The parameter `username` was found vulnerable to SQLi using `' OR 1=1 --`. 
+      This can bypass authentication.
+    </issueBackground>
+  </issue>
+  <issue>
+    <name>Insecure Cookie Flag</name>
+    <severity>Medium</severity>
+    <path>/</path>
+    <issueBackground>
+      The session cookie does not have the Secure or HttpOnly flag enabled.
+    </issueBackground>
+  </issue>
+  <issue>
+    <name>Information Disclosure</name>
+    <severity>Low</severity>
+    <path>/config/debug.php</path>
+    <issueBackground>
+      Debug file accessible publicly. May leak stack traces or configuration data.
+    </issueBackground>
+  </issue>
+</issues>

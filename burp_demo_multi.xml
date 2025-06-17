@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues burpVersion="2025.4.4" exportTime="2025-06-03T20:00:00Z">
+  <issue>
+    <name>Cross-site scripting (reflected)</name>
+    <severity>High</severity>
+    <path>/profile?name=</path>
+    <issueBackground>
+      Unsanitized input reflected in HTML output without encoding.
+    </issueBackground>
+  </issue>
+  <issue>
+    <name>SQL Injection</name>
+    <severity>High</severity>
+    <path>/login</path>
+    <issueBackground>
+      Unsanitized SQL input leads to database manipulation.
+    </issueBackground>
+  </issue>
+  <issue>
+    <name>Insecure Cookie Without HttpOnly Flag</name>
+    <severity>Medium</severity>
+    <path>/set-cookie</path>
+    <issueBackground>
+      Missing HttpOnly makes the cookie accessible to JavaScript.
+    </issueBackground>
+  </issue>
+  <issue>
+    <name>Cross-Site Request Forgery (CSRF)</name>
+    <severity>Medium</severity>
+    <path>/account/delete</path>
+    <issueBackground>
+      CSRF tokens are not implemented to protect sensitive actions.
+    </issueBackground>
+  </issue>
+  <issue>
+    <name>Exposed Internal IP Address</name>
+    <severity>Low</severity>
+    <path>/debug</path>
+    <issueBackground>
+      Debug page reveals internal IP addresses.
+    </issueBackground>
+  </issue>
+</issues>

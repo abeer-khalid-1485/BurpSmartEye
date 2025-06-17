@@ -1,0 +1,102 @@
+{
+  "sql-injection": {
+    "name": "SQL Injection",
+    "severity": "High",
+    "description": "يتيح تنفيذ استعلامات SQL خبيثة عبر إدخال غير مفلتر.",
+    "solution": "استخدم prepared statements وتحقق من المدخلات.",
+    "category": "Injection",
+    "references": [
+      "https://owasp.org/www-community/attacks/SQL_Injection"
+    ],
+    "keywords": ["sql injection", "SQLi", "database error", "syntax error", "query injection", "UNION SELECT", "OR 1=1", "information_schema", "blind SQL injection", "error-based SQL injection"]
+  },
+  "xss": {
+    "name": "Cross-Site Scripting (XSS)",
+    "severity": "High",
+    "description": "يسمح للمهاجم بحقن أكواد JavaScript في صفحات الويب.",
+    "solution": "استخدم التشفير المناسب للمدخلات عند الإخراج وتفعيل CSP.",
+    "category": "Injection",
+    "references": [
+      "https://owasp.org/www-community/attacks/xss/",
+      "https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP"
+    ],
+    "keywords": ["xss", "cross-site scripting", "script injection", "<script>", "alert()", "javascript:", "onerror", "onload", "document.cookie", "DOM XSS"]
+  },
+  "csrf": {
+    "name": "Cross-Site Request Forgery (CSRF)",
+    "severity": "Medium",
+    "description": "يستغل جلسات المستخدم لتنفيذ عمليات دون علمه.",
+    "solution": "استخدم رموز CSRF Tokens وتحقق من أصل الطلب.",
+    "category": "Authentication",
+    "references": [
+      "https://owasp.org/www-community/attacks/csrf"
+    ],
+    "keywords": ["csrf", "cross-site request forgery", "unauthorized request", "state-changing request", "CSRF token missing", "anti-CSRF", "forged request", "session riding", "CSRF attack", "CSRF vulnerability"]
+  },
+  "directory-traversal": {
+    "name": "Directory Traversal",
+    "severity": "High",
+    "description": "يسمح للمهاجم بالوصول إلى ملفات خارج المسار المحدد.",
+    "solution": "تحقق من أسماء الملفات ولا تسمح بـ ../ في المسارات.",
+    "category": "File Access",
+    "references": [
+      "https://owasp.org/www-community/attacks/Path_Traversal"
+    ],
+    "keywords": ["directory traversal", "path traversal", "../", "..\\", "file inclusion", "etc/passwd", "C:\\", "traverse directories", "unauthorized file access", "dot-dot-slash"]
+  },
+  "command-injection": {
+    "name": "Command Injection",
+    "severity": "High",
+    "description": "ينفذ أوامر نظام خطيرة عبر إدخال المستخدم.",
+    "solution": "استخدم طرق تنفيذ آمنة وفلترة المدخلات.",
+    "category": "Execution",
+    "references": [
+      "https://owasp.org/www-community/attacks/Command_Injection"
+    ],
+    "keywords": ["command injection", "shell injection", "OS command", "; ls", "&&", "|", "`", "cmd.exe", "bash -c", "system()"]
+  },
+  "xxe": {
+    "name": "XML External Entity (XXE) Injection",
+    "severity": "High",
+    "description": "يسمح للمهاجمين بقراءة ملفات النظام أو تنفيذ هجمات SSRF.",
+    "solution": "عطل الكيانات الخارجية في XML واستخدم محللات آمنة.",
+    "category": "Injection",
+    "references": [
+      "https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing"
+    ],
+    "keywords": ["xxe", "xml external entity", "DOCTYPE", "SYSTEM", "ENTITY", "file://", "SSRF via XML", "external DTD", "XML injection", "XXE attack"]
+  },
+  "open-redirect": {
+    "name": "Open Redirect",
+    "severity": "Low",
+    "description": "يعيد التوجيه لمواقع خبيثة دون تحقق.",
+    "solution": "تأكد من صحة رابط التوجيه واسم النطاق.",
+    "category": "Validation",
+    "references": [
+      "https://owasp.org/www-community/attacks/Redirect_After_Post"
+    ],
+    "keywords": ["open redirect", "unvalidated redirect", "redirect vulnerability", "URL redirection", "phishing redirect", "redirect to external site", "unsafe redirect", "location header manipulation", "redirect attack", "open URL redirect"]
+  },
+  "insecure-cookies": {
+    "name": "Insecure Cookie Flags",
+    "severity": "Medium",
+    "description": "الكوكيز بدون HttpOnly أو Secure يمكن اعتراضها.",
+    "solution": "فعل خصائص Secure وHttpOnly.",
+    "category": "Session Management",
+    "references": [
+      "https://owasp.org/www-community/controls/SecureCookieAttribute"
+    ],
+    "keywords": ["insecure cookies", "missing HttpOnly", "missing Secure flag", "cookie theft", "session hijacking", "cookie interception", "unsecured cookies", "cookie security", "cookie flags", "cookie vulnerability"]
+  },
+  "exposed-keys": {
+    "name": "Exposed API Keys",
+    "severity": "High",
+    "description": "وجود مفاتيح API في الكود قد يسمح بالوصول غير المصرح به.",
+    "solution": "اخفِ المفاتيح باستخدام .env أو Vault.",
+    "category": "Secrets Management",
+    "references": [
+      "https://security.googleblog.com/2021/02/introducing-git-hound-for-finding-secrets.html"
+    ],
+    "keywords": ["exposed API keys", "hardcoded API keys", "API key leakage", "public API key", "API key in code", "API key exposure", "API key vulnerability", "API key disclosure", "API key security", "API key compromise"]
+  }
+}

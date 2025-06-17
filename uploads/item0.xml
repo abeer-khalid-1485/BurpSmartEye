@@ -1,0 +1,26 @@
+<issues>
+  <issue>
+    <name>The shore</name>
+    <severity>Low</severity>
+    <path>/AJAX/infotitle.php?id=0</path>
+    <issueBackground>Empty iteminfo tag. Possible broken logic or information disclosure risk.</issueBackground>
+  </issue>
+  <issue>
+    <name>Walking</name>
+    <severity>Medium</severity>
+    <path>/AJAX/infotitle.php?id=4</path>
+    <issueBackground>Contains long placeholder text and image reference. May leak development info.</issueBackground>
+  </issue>
+  <issue>
+    <name>The universe</name>
+    <severity>Medium</severity>
+    <path>/AJAX/infotitle.php?id=3</path>
+    <issueBackground>Test content with formatted description and price field. Injection test case candidate.</issueBackground>
+  </issue>
+  <issue>
+    <name>Mistery</name>
+    <severity>Low</severity>
+    <path>/AJAX/infotitle.php?id=2</path>
+    <issueBackground>Standard test content. Likely placeholder.</issueBackground>
+  </issue>
+</issues>

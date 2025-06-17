@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues burpVersion="2025.4.4" exportTime="2025-06-03T18:00:00Z">
+  <issue>
+    <name>Cross-site scripting (reflected)</name>
+    <severity>High</severity>
+    <path>/search?q=test</path>
+    <issueBackground>
+      Reflected cross-site scripting vulnerabilities arise when data is copied from a request and echoed into the application's response in an unsafe way.
+    </issueBackground>
+  </issue>
+  <issue>
+    <name>SQL Injection</name>
+    <severity>High</severity>
+    <path>/login</path>
+    <issueBackground>
+      SQL injection vulnerabilities arise when user-controllable data is incorporated into SQL queries without sufficient validation or escaping.
+    </issueBackground>
+  </issue>
+  <issue>
+    <name>Insecure Cookie Without Secure Flag</name>
+    <severity>Medium</severity>
+    <path>/set-cookie</path>
+    <issueBackground>
+      Cookies transmitted over unencrypted connections can be intercepted by an attacker.
+    </issueBackground>
+  </issue>
+</issues>

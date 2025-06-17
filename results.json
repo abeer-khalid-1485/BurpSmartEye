@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Stored XSS in comment section",
+    "severity": "High",
+    "path": "/forum/post.php?id=22",
+    "description": "This input is reflected without encoding, allowing stored script execution. \n      The payload `",
+    "details": "يسمح للمهاجم بحقن أكواد JavaScript في صفحات الويب.",
+    "impact": "—",
+    "solution": "استخدم التشفير المناسب للمدخلات عند الإخراج وتفعيل CSP.",
+    "references": [
+      "https://owasp.org/www-community/attacks/xss/",
+      "https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP"
+    ],
+    "ai_advice": ""
+  },
+  {
+    "name": "SQL Injection in login",
+    "severity": "High",
+    "path": "/login.php",
+    "description": "The parameter `username` was found vulnerable to SQLi using `' OR 1=1 --`. \n      This can bypass authentication.",
+    "details": "يتيح تنفيذ استعلامات SQL خبيثة عبر إدخال غير مفلتر.",
+    "impact": "—",
+    "solution": "استخدم prepared statements وتحقق من المدخلات.",
+    "references": [
+      "https://owasp.org/www-community/attacks/SQL_Injection"
+    ],
+    "ai_advice": ""
+  },
+  {
+    "name": "Insecure Cookie Flag",
+    "severity": "Medium",
+    "path": "/",
+    "description": "The session cookie does not have the Secure or HttpOnly flag enabled.",
+    "details": "لا يوجد تفاصيل.",
+    "impact": "—",
+    "solution": "—",
+    "references": [],
+    "ai_advice": ""
+  },
+  {
+    "name": "Information Disclosure",
+    "severity": "Low",
+    "path": "/config/debug.php",
+    "description": "Debug file accessible publicly. May leak stack traces or configuration data.",
+    "details": "لا يوجد تفاصيل.",
+    "impact": "—",
+    "solution": "—",
+    "references": [],
+    "ai_advice": ""
+  }
+]

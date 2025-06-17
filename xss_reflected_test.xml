@@ -1,0 +1,12 @@
+<issues>
+  <issue>
+    <name>Reflected XSS in search input</name>
+    <severity>High</severity>
+    <path>/search.php?q=<script>alert('XSS')</script></path>
+    <issueBackground>
+      A reflected XSS vulnerability exists when user input is immediately returned by the server without proper sanitization. An attacker can craft a malicious link with JavaScript that executes when the victim visits it.
+      🔍 This example used payload: `<script>alert('XSS')</script>` in a GET request.
+      💡 AI Advice: Encode output using HTML entity encoding before rendering user input. Consider using frameworks that handle this automatically.
+    </issueBackground>
+  </issue>
+</issues>

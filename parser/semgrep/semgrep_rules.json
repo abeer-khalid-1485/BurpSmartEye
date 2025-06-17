@@ -1,0 +1,72 @@
+[
+  {
+    "id": "xss",
+    "patterns": ["<script>", "document.write("],
+    "message": "استخدام سكربت مباشر قد يؤدي إلى XSS",
+    "severity": "HIGH",
+    "language": "html"
+  },
+  {
+    "id": "sql-injection",
+    "patterns": ["SELECT.*FROM.*WHERE.*\\+.*", "execute\\(.*\\+.*\\)"],
+    "message": "احتمال وجود SQL Injection بسبب concatenation",
+    "severity": "HIGH",
+    "language": "php"
+  },
+  {
+    "id": "hardcoded-password",
+    "patterns": ["password\\s*=\\s*['\"].+['\"]"],
+    "message": "تم العثور على كلمة مرور في الكود",
+    "severity": "MEDIUM",
+    "language": "python"
+  },
+  {
+    "id": "debug-mode",
+    "patterns": ["DEBUG\\s*=\\s*True"],
+    "message": "تمكين وضع التصحيح يعرض التطبيق للخطر",
+    "severity": "MEDIUM",
+    "language": "python"
+  },
+  {
+    "id": "command-injection",
+    "patterns": ["os.system\\(", "subprocess.call\\("],
+    "message": "تنفيذ أوامر مباشرة قد يفتح ثغرات Command Injection",
+    "severity": "HIGH",
+    "language": "python"
+  },
+  {
+    "id": "broken-authentication",
+    "patterns": ["session\\['user_id'\\]\\s*=\\s*None", "login_required\\s*=\\s*False"],
+    "message": "احتمالية ضعف في التحقق من هوية المستخدم",
+    "severity": "HIGH",
+    "language": "python"
+  },
+  {
+    "id": "sensitive-data-exposure",
+    "patterns": ["print\\(credit_card", "console\\.log\\(password"],
+    "message": "بيانات حساسة قد يتم كشفها في السجلات أو الواجهة",
+    "severity": "HIGH",
+    "language": "python"
+  },
+  {
+    "id": "security-misconfiguration",
+    "patterns": ["ALLOWED_HOSTS\\s*=\\s*\\[\\]"],
+    "message": "إعدادات أمان ناقصة مثل ترك ALLOWED_HOSTS فارغة",
+    "severity": "MEDIUM",
+    "language": "python"
+  },
+  {
+    "id": "known-vuln-libs",
+    "patterns": ["jquery-1\\.3", "lodash\\s+<\\s+4\\.17"],
+    "message": "تستخدم مكتبات معروفة بثغرات",
+    "severity": "HIGH",
+    "language": "js"
+  },
+  {
+    "id": "insecure-cookie",
+    "patterns": ["Set-Cookie:.*(?!Secure)(?!HttpOnly)"],
+    "message": "كوكي غير مؤمنة لا تحتوي على HttpOnly أو Secure",
+    "severity": "LOW",
+    "language": "http"
+  }
+]

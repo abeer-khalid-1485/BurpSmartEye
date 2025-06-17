@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>Burp Smart Eye</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="/static/logo.png" alt="Logo">
+    </div>
+    <h1>🔍 Burp Smart Eye</h1>
+    <p>🛡️ أداة تحليل ذكية للتقارير واكتشاف الثغرات</p>
+    <p style="font-size: 14px; color: #888;">يمكنك رفع تقارير XML من Burp Suite أو ملفات كود (HTML, JS, PHP, PY) لتحليلها تلقائيًا</p>
+
+    {% if message %}
+      <div class="alert">{{ message }}</div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+      <input type="file" name="file" required>
+      <button type="submit">📤 رفع التقرير</button>
+    </form>
+
+    {% if results %}
+      <h2>🔎 نتائج التحليل</h2>
+
+      <!-- ملخص الخطورة -->
+      <div class="summary-box">
+        <h3>📈 ملخص مستويات الخطورة</h3>
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th>⚠️ عالية</th>
+              <th>⚠️ متوسطة</th>
+              <th>⚠️ منخفضة</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ summary.High }}</td>
+              <td>{{ summary.Medium }}</td>
+              <td>{{ summary.Low }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {% for r in results %}
+        <div class="card {{ r.severity|lower }}">
+          <h3>{{ r.name }}</h3>
+          <ul>
+            <li><strong>الخطورة:</strong> {{ r.severity }}</li>
+            <li><strong>الوصف:</strong> {{ r.description or 'لا يوجد' }}</li>
+            <li><strong>الحل التقليدي:</strong> {{ r.solution or '—' }}</li>
+            <li><strong>المسار:</strong> {{ r.path or 'غير محدد' }}</li>
+            <li><strong>تفاصيل:</strong> {{ r.details or '—' }}</li>
+            {% if r.references %}
+              <li><strong>مراجع:</strong>
+                <ul>
+                  {% for ref in r.references %}
+                    <li><a href="{{ ref }}" target="_blank">{{ ref }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% endif %}
+          </ul>
+
+          <!-- زر الذكاء الاصطناعي -->
+          <button type="button" class="ai-button" data-vuln="{{ r.name }}" data-severity="{{ r.severity|lower }}">
+            🤖 توليد شرح بالذكاء الاصطناعي
+          </button>
+          <div class="ai-result-container" style="margin-top: 15px;"></div>
+        </div>
+      {% endfor %}
+
+      <form method="POST" action="/download_excel">
+  <button type="submit">📊 تحميل التقرير الحالي (Excel)</button>
+</form>
+
+<form method="POST" action="/download_excel_append">
+  <button type="submit">📁 تحميل التقرير التراكمي (Excel موحّد)</button>
+</form>
+{% endif %}
+
+
+  <!-- سكربت الشرح بالذكاء الاصطناعي -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".ai-button").forEach(btn => {
+        btn.addEventListener("click", async function () {
+          const vulnName = this.getAttribute("data-vuln");
+          const severity = this.getAttribute("data-severity");
+          const resultBox = this.nextElementSibling;
+
+          resultBox.innerHTML = `
+            <div class="card ${severity}">
+              ⏳ جاري توليد الشرح باستخدام الذكاء الاصطناعي...
+            </div>
+          `;
+
+          try {
+            const response = await fetch("/ai_explain", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              body: `vuln_name=${encodeURIComponent(vulnName)}`
+            });
+
+            const data = await response.json();
+
+            resultBox.innerHTML = `
+          <div class="card ${severity}">
+          <strong>🧠 شرح الذكاء الاصطناعي:</strong><br>
+          <small style="color: #ccc; display: block; margin-bottom: 10px;">
+          هذا الشرح مقترح بواسطة نموذج ذكاء صناعي وقد لا يكون دقيقًا بنسبة 100%.
+          </small>
+          <div style="white-space: pre-line;">${data.explanation}</div>
+          </div>
+            `;
+
+            
+          } catch (e) {
+            resultBox.innerHTML = `
+              <div class="card ${severity}">
+                ❌ فشل في توليد الشرح، يرجى المحاولة مرة أخرى.
+              </div>
+            `;
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

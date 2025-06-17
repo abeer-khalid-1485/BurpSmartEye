@@ -1,0 +1,129 @@
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+.logo img {
+  width: 130px;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 10px #00f7ff);
+}
+
+h1, h2 {
+  color: #00f7ff;
+  text-shadow: 0 0 2px #00f7ff, 0 0 2px #00e6ff;
+  margin-bottom: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  margin: 20px 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+input[type="file"] {
+  padding: 15px 20px;
+  font-size: 16px;
+  border: 2px dashed #00c3ff;
+  background-color: #1f1f1f;
+  color: #fff;
+  border-radius: 5px;
+  width: 260px;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 16px;
+  background-color: #00c3ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 0 6px #00c3ff;
+}
+
+button:hover {
+  background-color: #009acd;
+  box-shadow: 0 0 10px #00c3ff;
+}
+
+.card {
+  margin: 20px auto;
+  padding: 20px;
+  width: 80%;
+  background-color: #1f1f1f;
+  border-right: 5px solid #00c3ff;
+  text-align: right;
+  box-shadow: 0 0 8px rgba(0, 195, 255, 0.3);
+}
+
+.card.high {
+  border-right-color: #ff3b3b;
+  box-shadow: 0 0 10px rgba(255, 59, 59, 0.3);
+}
+
+.card.medium {
+  border-right-color: #ffa500;
+  box-shadow: 0 0 10px rgba(255, 165, 0, 0.3);
+}
+
+.card.low {
+  border-right-color: #4caf50;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.card li {
+  margin-bottom: 8px;
+}
+
+.alert {
+  background-color: #5a0000;
+  padding: 15px;
+  margin-top: 20px;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #ff0000;
+}
+
+/* ✅ صندوق شرح الذكاء الاصطناعي */
+.ai-result {
+  background-color: #1e2a38;
+  border-right: 4px solid #00f7ff;
+  padding: 15px;
+  margin-top: 10px;
+  color: #e0f7ff;
+  font-size: 15px;
+  text-align: right;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 247, 255, 0.2);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.ai-result::before {
+  content: "🧠 شرح الذكاء الصناعي:";
+  display: block;
+  font-weight: bold;
+  color: #00eaff;
+  margin-bottom: 6px;
+  font-size: 16px;
+}

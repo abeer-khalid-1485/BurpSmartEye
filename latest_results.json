@@ -1,0 +1,61 @@
+[
+  {
+    "name": "Cross-site scripting (reflected)",
+    "severity": "High",
+    "path": "/profile?name=",
+    "description": "\n      unsanitized input reflected in html output without encoding.\n    ",
+    "details": "يسمح للمهاجم بحقن أكواد JavaScript في صفحات الويب.",
+    "impact": "—",
+    "solution": "استخدم التشفير المناسب للمدخلات عند الإخراج وتفعيل CSP.",
+    "references": [
+      "https://owasp.org/www-community/attacks/xss/",
+      "https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP"
+    ]
+  },
+  {
+    "name": "SQL Injection",
+    "severity": "High",
+    "path": "/login",
+    "description": "\n      unsanitized sql input leads to database manipulation.\n    ",
+    "details": "يتيح تنفيذ استعلامات SQL خبيثة عبر إدخال غير مفلتر.",
+    "impact": "—",
+    "solution": "استخدم prepared statements وتحقق من المدخلات.",
+    "references": [
+      "https://owasp.org/www-community/attacks/SQL_Injection"
+    ]
+  },
+  {
+    "name": "Insecure Cookie Without HttpOnly Flag",
+    "severity": "Medium",
+    "path": "/set-cookie",
+    "description": "\n      missing httponly makes the cookie accessible to javascript.\n    ",
+    "details": "الكوكيز بدون HttpOnly أو Secure يمكن اعتراضها.",
+    "impact": "—",
+    "solution": "فعل خصائص Secure وHttpOnly.",
+    "references": [
+      "https://owasp.org/www-community/controls/SecureCookieAttribute"
+    ]
+  },
+  {
+    "name": "Cross-Site Request Forgery (CSRF)",
+    "severity": "Medium",
+    "path": "/account/delete",
+    "description": "\n      csrf tokens are not implemented to protect sensitive actions.\n    ",
+    "details": "يستغل جلسات المستخدم لتنفيذ عمليات دون علمه.",
+    "impact": "—",
+    "solution": "استخدم رموز CSRF Tokens وتحقق من أصل الطلب.",
+    "references": [
+      "https://owasp.org/www-community/attacks/csrf"
+    ]
+  },
+  {
+    "name": "Exposed Internal IP Address",
+    "severity": "Low",
+    "path": "/debug",
+    "description": "\n      debug page reveals internal ip addresses.\n    ",
+    "details": "لا يوجد تفاصيل.",
+    "impact": "—",
+    "solution": "—",
+    "references": []
+  }
+]
