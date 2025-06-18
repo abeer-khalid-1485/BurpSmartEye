@@ -1,9 +1,9 @@
 [
   {
-    "name": "Stored XSS in comment section",
+    "name": "Cross-site scripting (reflected)",
     "severity": "High",
-    "path": "/forum/post.php?id=22",
-    "description": "This input is reflected without encoding, allowing stored script execution. \n      The payload `",
+    "path": "/profile?name=",
+    "description": "Unsanitized input reflected in HTML output without encoding.",
     "details": "يسمح للمهاجم بحقن أكواد JavaScript في صفحات الويب.",
     "impact": "—",
     "solution": "استخدم التشفير المناسب للمدخلات عند الإخراج وتفعيل CSP.",
@@ -14,10 +14,10 @@
     "ai_advice": ""
   },
   {
-    "name": "SQL Injection in login",
+    "name": "SQL Injection",
     "severity": "High",
-    "path": "/login.php",
-    "description": "The parameter `username` was found vulnerable to SQLi using `' OR 1=1 --`. \n      This can bypass authentication.",
+    "path": "/login",
+    "description": "Unsanitized SQL input leads to database manipulation.",
     "details": "يتيح تنفيذ استعلامات SQL خبيثة عبر إدخال غير مفلتر.",
     "impact": "—",
     "solution": "استخدم prepared statements وتحقق من المدخلات.",
@@ -27,21 +27,36 @@
     "ai_advice": ""
   },
   {
-    "name": "Insecure Cookie Flag",
+    "name": "Insecure Cookie Without HttpOnly Flag",
     "severity": "Medium",
-    "path": "/",
-    "description": "The session cookie does not have the Secure or HttpOnly flag enabled.",
-    "details": "لا يوجد تفاصيل.",
+    "path": "/set-cookie",
+    "description": "Missing HttpOnly makes the cookie accessible to JavaScript.",
+    "details": "الكوكيز بدون HttpOnly أو Secure يمكن اعتراضها.",
     "impact": "—",
-    "solution": "—",
-    "references": [],
+    "solution": "فعل خصائص Secure وHttpOnly.",
+    "references": [
+      "https://owasp.org/www-community/controls/SecureCookieAttribute"
+    ],
     "ai_advice": ""
   },
   {
-    "name": "Information Disclosure",
+    "name": "Cross-Site Request Forgery (CSRF)",
+    "severity": "Medium",
+    "path": "/account/delete",
+    "description": "CSRF tokens are not implemented to protect sensitive actions.",
+    "details": "يستغل جلسات المستخدم لتنفيذ عمليات دون علمه.",
+    "impact": "—",
+    "solution": "استخدم رموز CSRF Tokens وتحقق من أصل الطلب.",
+    "references": [
+      "https://owasp.org/www-community/attacks/csrf"
+    ],
+    "ai_advice": ""
+  },
+  {
+    "name": "Exposed Internal IP Address",
     "severity": "Low",
-    "path": "/config/debug.php",
-    "description": "Debug file accessible publicly. May leak stack traces or configuration data.",
+    "path": "/debug",
+    "description": "Debug page reveals internal IP addresses.",
     "details": "لا يوجد تفاصيل.",
     "impact": "—",
     "solution": "—",

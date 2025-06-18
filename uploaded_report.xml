@@ -1,36 +1,43 @@
-<issues>
+<?xml version="1.0" encoding="UTF-8"?>
+<issues burpVersion="2025.4.4" exportTime="2025-06-03T20:00:00Z">
   <issue>
-    <name>Stored XSS in comment section</name>
+    <name>Cross-site scripting (reflected)</name>
     <severity>High</severity>
-    <path>/forum/post.php?id=22</path>
+    <path>/profile?name=</path>
     <issueBackground>
-      This input is reflected without encoding, allowing stored script execution. 
-      The payload `<script>alert('xss')</script>` was permanently stored in comments.
+      Unsanitized input reflected in HTML output without encoding.
     </issueBackground>
   </issue>
   <issue>
-    <name>SQL Injection in login</name>
+    <name>SQL Injection</name>
     <severity>High</severity>
-    <path>/login.php</path>
+    <path>/login</path>
     <issueBackground>
-      The parameter `username` was found vulnerable to SQLi using `' OR 1=1 --`. 
-      This can bypass authentication.
+      Unsanitized SQL input leads to database manipulation.
     </issueBackground>
   </issue>
   <issue>
-    <name>Insecure Cookie Flag</name>
+    <name>Insecure Cookie Without HttpOnly Flag</name>
     <severity>Medium</severity>
-    <path>/</path>
+    <path>/set-cookie</path>
     <issueBackground>
-      The session cookie does not have the Secure or HttpOnly flag enabled.
+      Missing HttpOnly makes the cookie accessible to JavaScript.
     </issueBackground>
   </issue>
   <issue>
-    <name>Information Disclosure</name>
-    <severity>Low</severity>
-    <path>/config/debug.php</path>
+    <name>Cross-Site Request Forgery (CSRF)</name>
+    <severity>Medium</severity>
+    <path>/account/delete</path>
     <issueBackground>
-      Debug file accessible publicly. May leak stack traces or configuration data.
+      CSRF tokens are not implemented to protect sensitive actions.
+    </issueBackground>
+  </issue>
+  <issue>
+    <name>Exposed Internal IP Address</name>
+    <severity>Low</severity>
+    <path>/debug</path>
+    <issueBackground>
+      Debug page reveals internal IP addresses.
     </issueBackground>
   </issue>
 </issues>

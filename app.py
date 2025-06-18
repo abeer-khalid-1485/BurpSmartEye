@@ -11,8 +11,14 @@ from dotenv import load_dotenv
 from parser.burp_parser import parse_burp_xml
 from parser.semgrep.semgrep_scanner import run_semgrep_scan
 
+# تحميل المفتاح من env
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# فحص المفتاح والتأكيد
+print("✅ env موجود؟:", os.path.exists(".env"))
+print("🔑 المفتاح تم تحميله؟:", bool(openai.api_key))
+
 app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
@@ -62,9 +68,11 @@ def download_excel():
     ws.title = "نتائج التحليل"
     now = datetime.now().strftime("%Y-%m-%d %H:%M")
     ws.merge_cells("A1:I1")
-    ws["A1"] = f"تاريخ التحليل: {now}"
-    ws["A1"].font = Font(bold=True)
+    ws["A1"] = f"📅 تاريخ التحليل: {now}"
+    ws["A1"].font = Font(bold=True, color="FFFFFF")
+    ws["A1"].fill = PatternFill("solid", fgColor="00C3FF")
     ws["A1"].alignment = Alignment(horizontal="center", vertical="center")
+
     header_font = Font(bold=True, color="FFFFFF")
     header_fill = PatternFill("solid", fgColor="00C3FF")
     align_center = Alignment(horizontal="center", vertical="center", wrap_text=True)
@@ -77,6 +85,7 @@ def download_excel():
     for r_idx, row in enumerate(df.itertuples(index=False), 3):
         for c_idx, value in enumerate(row, 1):
             ws.cell(row=r_idx, column=c_idx, value=str(value)).alignment = align_center
+
     if "severity" in df.columns:
         severity_counts = df["severity"].value_counts()
         plt.figure(figsize=(5, 5))
@@ -92,6 +101,7 @@ def download_excel():
             img.height = 300
             img.anchor = "J3"
             ws.add_image(img)
+
     output_path = "exports/analysis_results_one.xlsx"
     wb.save(output_path)
     return send_file(output_path, as_attachment=True)
@@ -105,17 +115,27 @@ def download_excel_append():
     df = pd.DataFrame(results)
     file_path = "exports/analysis_results.xlsx"
     os.makedirs("exports", exist_ok=True)
+    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+
     if os.path.exists(file_path):
         wb = load_workbook(file_path)
         ws = wb.active
-        start_row = ws.max_row + 2
+        last_row = ws.max_row + 2
+        ws.insert_rows(last_row)
+        ws.merge_cells(start_row=last_row, start_column=1, end_row=last_row, end_column=9)
+        cell = ws.cell(row=last_row, column=1, value=f"📅 تاريخ التحليل: {now}")
+        cell.font = Font(bold=True, color="FFFFFF")
+        cell.fill = PatternFill("solid", fgColor="00C3FF")
+        cell.alignment = Alignment(horizontal="center", vertical="center")
+        start_row = last_row + 1
     else:
         wb = Workbook()
         ws = wb.active
         ws.title = "نتائج التحليل"
         ws.merge_cells("A1:I1")
-        ws["A1"] = "📊 سجل تحاليل Burp Smart Eye"
-        ws["A1"].font = Font(bold=True)
+        ws["A1"] = f"📅 تاريخ التحليل: {now}"
+        ws["A1"].font = Font(bold=True, color="FFFFFF")
+        ws["A1"].fill = PatternFill("solid", fgColor="00C3FF")
         ws["A1"].alignment = Alignment(horizontal="center", vertical="center")
         header_font = Font(bold=True, color="FFFFFF")
         header_fill = PatternFill("solid", fgColor="00C3FF")
@@ -127,11 +147,28 @@ def download_excel_append():
             cell.alignment = align_center
             ws.column_dimensions[cell.column_letter].width = 40
         start_row = 3
-    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+        # مخطط دائري فقط عند الإنشاء لأول مرة
+        if "severity" in df.columns:
+            severity_counts = df["severity"].value_counts()
+            plt.figure(figsize=(5, 5))
+            plt.pie(severity_counts, labels=severity_counts.index, autopct="%1.1f%%", startangle=90)
+            plt.title("📊 توزيع مستويات الخطورة", fontsize=12)
+            plt.tight_layout()
+            chart_path = os.path.join("static", "severity_chart_append.png")
+            plt.savefig(chart_path, format="png")
+            plt.close()
+            if os.path.exists(chart_path):
+                img = ExcelImage(chart_path)
+                img.width = 300
+                img.height = 300
+                img.anchor = "J3"
+                ws.add_image(img)
+
     for i, row in df.iterrows():
         for j, value in enumerate(row, 1):
             ws.cell(row=start_row + i, column=j, value=str(value))
-        ws.cell(row=start_row + i, column=len(df.columns) + 1, value=now)
+
     wb.save(file_path)
     return send_file(file_path, as_attachment=True)
 
